@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+
+	<Image UNID="&LFS_rsSlotDefFixed;"	bitmap="resources/images/UI/SlotDefFixed.jpg"	bitmask="resources/images/UI/SlotGenFixed_Mask.bmp" />
+	<Image UNID="&LFS_rsSlotDefPivot;"	bitmap="resources/images/UI/SlotDefPivot.jpg"	bitmask="resources/images/UI/SlotGenPivot_Mask.bmp" />
+	<Image UNID="&LFS_rsSlotDefOmni;"	bitmap="resources/images/UI/SlotDefOmni.jpg"	bitmask="resources/images/UI/SlotGenOmni_Mask.bmp" />
+	
+	
+	<Image UNID="&LFS_rsSlotPriFixed;"	bitmap="resources/images/UI/SlotPriFixed.jpg"	bitmask="resources/images/UI/SlotGenFixed_Mask.bmp" />
+	<Image UNID="&LFS_rsSlotPriPivot;"	bitmap="resources/images/UI/SlotPriPivot.jpg"	bitmask="resources/images/UI/SlotGenPivot_Mask.bmp" />
+	<Image UNID="&LFS_rsSlotPriOmni;"	bitmap="resources/images/UI/SlotPriOmni.jpg"	bitmask="resources/images/UI/SlotGenOmni_Mask.bmp" />
+	
+	
+	<Image UNID="&LFS_rsSlotLnkFixed;"	bitmap="resources/images/UI/SlotLnkFixed.jpg"	bitmask="resources/images/UI/SlotGenFixed_Mask.bmp" />
+	<Image UNID="&LFS_rsSlotLnkPivot;"	bitmap="resources/images/UI/SlotLnkPivot.jpg"	bitmask="resources/images/UI/SlotGenPivot_Mask.bmp" />
+	<Image UNID="&LFS_rsSlotLnkOmni;"	bitmap="resources/images/UI/SlotLnkOmni.jpg"	bitmask="resources/images/UI/SlotGenOmni_Mask.bmp" />
+</TranscendenceModule>

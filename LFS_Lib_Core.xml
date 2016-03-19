@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE TranscendenceLibrary
+	[
+	<!ENTITY LFS_unidLFSLib					"0xA0030013">
+
+	<!-- DOCKSCREENS -->
+	<!ENTITY LFS_dsEquip					"0xA0031301">
+	<!ENTITY LFS_dsEquipItem				"0xA0031302">
+
+	
+	<!-- DOCKSCREEN HOOKS -->
+	
+	<!-- RESOURCES -->
+	
+	<!ENTITY LFS_rsSlotDefFixed				"0xA00313E0">
+	<!ENTITY LFS_rsSlotDefPivot				"0xA00313E1">
+	<!ENTITY LFS_rsSlotDefOmni				"0xA00313E2">
+	<!ENTITY LFS_rsSlotPriFixed				"0xA00313E3">
+	<!ENTITY LFS_rsSlotPriPivot				"0xA00313E4">
+	<!ENTITY LFS_rsSlotPriOmni				"0xA00313E5">
+	<!ENTITY LFS_rsSlotLnkFixed				"0xA00313E6">
+	<!ENTITY LFS_rsSlotLnkPivot				"0xA00313E7">
+	<!ENTITY LFS_rsSlotLnkOmni				"0xA00313E8">
+	
+	<!-- EXTERNAL -->
+	<!ENTITY TSB_unidTSBFunctionLibrary			"0xA00A0002">
+]>
+
+<TranscendenceLibrary
+	name="Transcendence Linked-Fire Slot Library"
+	credits="Wolfy"
+	UNID="&LFS_unidLFSLib;"
+	release="1"
+	version="1.0.0.0"
+	apiVersion="22">
+
+<!-- LIBRARIES -->
+
+	<Library unid="&TSB_unidTSBFunctionLibrary;"/>
+	
+	
+<!-- MODULES -->
+
+	<Modules>
+		<Module filename="LFS_Dockscreens.xml"/>
+		<Module filename="LFS_Images.xml"/>
+	</Modules>
+
+<!-- GLOBALS -->
+
+	<Globals>
+	</Globals>
+
+</TranscendenceLibrary>

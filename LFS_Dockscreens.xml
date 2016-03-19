@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TranscendenceModule>
+
+	
+	<DockScreen UNID="&LFS_dsEquip;"
+			name=				"=(objGetName gSource)"
+			type=				"customPicker"
+			backgroundID=		"&rsItemListScreen;"
+			>
+
+		<!--<ListOptions
+			dataFrom=	"station"
+			list=		"w^I"
+			>
+		</ListOptions>-->
+		
+		<!-- Define the list we need -->
+		<List>
+			 (block (slotList pickerList)
+			 	(setq slotList (TSB_shpGetSlotList gSource))
+			 	;;translate the slotlist into the (list ... (list 'name 'pic 'desc) ...) list that this needs
+			 	(setq pickerList (list))
+			 	(enum slotList slot
+			 		(lnkAppend pickerList 
+			 			(list 
+			 				;;set the display name
+			 				(item slot 0)
+			 				;;set the image
+			 				(resCreateImageDesc
+			 					;;get the unid to generate a resource for
+			 					(switch
+			 						(eq (item slot 0) 'Default)
+			 							(switch
+			 								(item slot 4)
+			 									&LFS_rsSlotDefOmni;
+			 								(item slot 5)
+			 									&LFS_rsSlotDefPivot;
+			 								;;Default
+			 									&LFS_rsSlotDefFixed;
+			 							)
+			 						(or (eq (item slot 8) 'always) (eq (item slot 8) 'whenInFireArc) (eq (item slot 8) 'targetInRange))
+			 							(switch
+			 								(item slot 4)
+			 									&LFS_rsSlotLnkOmni;
+			 								(item slot 5)
+			 									&LFS_rsSlotLnkPivot;
+			 								;;Default
+			 									&LFS_rsSlotLnkFixed;
+			 							)
+			 						;;Is a primary
+			 							(switch
+			 								(item slot 4)
+			 									&LFS_rsSlotPriOmni;
+			 								(item slot 5)
+			 									&LFS_rsSlotPriPivot;
+			 								;;Default
+			 									&LFS_rsSlotPriFixed;
+			 							)
+			 					)
+			 					0	;x offset
+			 					0	;y offset
+			 					96	;x size
+			 					96	;y size
+			 				)
+			 				;;construct the description
+			 				(cat
+			 					;;construct a description string
+			 					"Currently equipped item: "
+			 					(if (not (eq (item slot 0) 'Default))
+			 						(if (and (item slot 11) (TSB_objHasItem gSource (item slot 11)))
+			 							(itmGetName (item slot 11) (add 1 4))
+			 							"No Item equipped"
+			 						)
+			 						"Default slot"
+			 					)
+			 					"\n"
+			 					"Aim type: "
+			 					(switch
+			 						(item slot 4)
+			 							"Omnidirectional"
+			 						(item slot 5)
+			 							(cat "Pivots between " (item slot 6) " degrees to " (item slot 7) " degrees")
+			 						;;Default
+			 							"Fixed direction"
+			 					)
+			 					"\n"
+			 					"Linked fire type: "
+			 					(switch
+			 						(eq (item slot 8) 'always)
+			 							"Always fires"
+			 						(eq (item slot 8) 'whenInFireArc)
+			 							"Fires if target is in fire arc"
+			 						(eq (item slot 8) 'targetInRange)
+			 							"Fires if target is in range"
+			 						;;Default
+			 							"Primary slot"
+			 					)
+			 				)
+			 				;;attach data
+			 				slot ;;sneak in the slot data in the 4th position
+			 			)
+			 		)
+			 	)
+			 	(dbglog slotList)
+			 	(dbglog pickerList)
+			 	pickerList
+			 )
+		</List>
+		<Panes>
+			<Default desc="Pick slot to equip a weapon on.">
+			
+				<Initialize>
+					(block Nil
+						(scrEnableAction gScreen 0 True)
+						(scrEnableAction gScreen 1 True)
+					)
+				</Initialize>
+				<Actions>
+					<Action name="Pick Slot" default="1" key="P">
+						(block (theSlot)
+							(setq theSlot (scrGetListEntry gScreen))
+							(objSetData gSource 'LFS_selectedSlot (item theSlot 3));;save the slot list in here for the next dockscreen
+							;;(if theItem (TSB_shpInstallItemToSlot gSource theItem 'Left))
+							;;(scrEnableAction gScreen 1 True)
+							(scrShowScreen gScreen &LFS_dsEquipItem;)
+						)
+					</Action>
+					<Action name="Done" cancel="1" key="D">
+						(block Nil
+							(scrShowScreen gScreen &dsShipInterior;)
+						)
+					</Action>
+				</Actions>
+			</Default>
+		</Panes>
+
+	</DockScreen>
+	
+	
+	<DockScreen UNID="&LFS_dsEquipItem;"
+			name=				"=(objGetName gSource)"
+			type=				"itemPicker"
+			backgroundID=		"&rsItemListScreen;"
+			>
+
+		<ListOptions
+			dataFrom=	"station"
+			list=		"w^I"
+			>
+			(block (filter)
+				(setq filter (item (item (objGetData gSource 'LFS_selectedSlot) 10) 0))
+				(if filter
+					(scrSetListFilter gScreen filter)
+					(scrSetListFilter gScreen "w^I")
+				)
+			)
+		</ListOptions>
+
+		<Panes>
+			<Default desc="Install an item to this slot.">
+			
+				<Initialize>
+					(block Nil
+						;(scrSetListFilter gScreen "w^I")
+						(scrEnableAction gScreen 0 True)
+						(scrEnableAction gScreen 1 True)
+					)
+				</Initialize>
+				<Actions>
+					<Action name="Equip Item" default="1" key="E">
+						(block (theItem)
+							(setq theItem (scrGetItem gScreen))
+							(if theItem (TSB_shpInstallItemToSlot gSource theItem (item (objGetData gSource 'LFS_selectedSlot) 0)))
+							(scrShowScreen gScreen &LFS_dsEquip;)
+						)
+					</Action>
+					<Action name="Back" cancel="1" key="B">
+						(scrShowScreen gScreen &LFS_dsEquip;)
+					</Action>
+				</Actions>
+			</Default>
+		</Panes>
+
+	</DockScreen>
+
+
+</TranscendenceModule>
